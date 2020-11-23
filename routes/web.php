@@ -22,3 +22,7 @@ Route::get('/farmer', function () {
 Route::get('/bread', function () {
     return view('bread');
 });
+Route::get('/product', function () {
+    return view('product');
+});
+

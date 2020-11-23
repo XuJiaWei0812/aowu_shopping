@@ -1,13 +1,12 @@
-html,
-body {
+html,body {
     height: 100%;
     margin: 0;
     padding: 0;
     font-family: Noto Sans TC;
     word-wrap: break-word;
     flex-direction: column;
-    overflow:inherit;
+    overflow: inherit;
 }
-#headers{
-    background-color:#264653;
+#headers {
+    background-color: #264653;
 }

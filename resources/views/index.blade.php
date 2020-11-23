@@ -13,9 +13,9 @@
     <title>阿梧生活賣場</title>
 </head>
 
-<body>
+<body style="background-color:#90be6d;">
     <header class="navbar navbar-expand-lg navbar-dark" id="headers">
-        <a class="navbar-brand" href="#">Aowu-Life</a>
+        <a class="navbar-brand" href="/">Aowu-Life賣場</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{asset('/')}}">首頁</a>
+                    <a class="nav-link" href="/">首頁</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/farmer">小農產品</a>
@@ -43,6 +43,29 @@
             </ul>
         </div>
     </header>
+
+    <section class="container-fluid">
+        <div class="row mx-auto">
+            <div class="col-lg-4 py-3">
+                <a href="/product" style="color:#000000;text-decoration: none;transform:scale(1,1);">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{{asset('./image/測試照片 (2).jpg')}}" class="img-fluid d-block rounded"
+                                alt="this is the product photo">
+                            <div class="card-title text-left font-weight-bold pt-3">
+                                【歐式麵包-短棍型】自家純手工製作 純牛奶且無添加防腐劑
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <p class="card-text">NT $35
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
