@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,15 +13,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('user/index');
 });
 Route::get('/farmer', function () {
-    return view('farmer');
+    return view('user/farmer');
 });
 Route::get('/bread', function () {
-    return view('bread');
+    return view('user/bread');
 });
 Route::get('/product', function () {
-    return view('product');
+    return view('user/product');
 });
-
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', 'ProductController@index');
+    Route::get('/product/{id}', 'ProductController@show');
+    Route::post('/product', 'ProductController@store');
+});

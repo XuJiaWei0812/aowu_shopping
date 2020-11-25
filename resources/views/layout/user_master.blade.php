@@ -5,15 +5,15 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="{{asset('css/index.css')}}">
+    <link rel="stylesheet" href="{{asset('css/user.css')}}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <title>手工麵包</title>
+    <title>@yield('title')</title>
 </head>
 
-<body>
+<body style="background-color:#90be6d;">
     <header class="navbar navbar-expand-lg navbar-dark" id="headers">
         <a class="navbar-brand" href="/">Aowu-Life賣場</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -23,13 +23,13 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="/">首頁</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/farmer">小農產品</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/bread">手工麵包</a>
                 </li>
             </ul>
@@ -43,6 +43,9 @@
             </ul>
         </div>
     </header>
+
+    @yield('content')
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
