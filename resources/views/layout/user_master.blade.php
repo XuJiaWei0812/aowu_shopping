@@ -13,7 +13,7 @@
     <title>@yield('title')</title>
 </head>
 
-<body style="background-color:#90be6d;">
+<body style="background-color:#e9c46a;">
     <header class="navbar navbar-expand-lg navbar-dark" id="headers">
         <a class="navbar-brand" href="/">Aowu-Life賣場</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

@@ -1,4 +1,5 @@
-html,body {
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -10,10 +11,10 @@ html,body {
 #headers {
     background-color: #264653;
 }
-#addProduct{
-    background-color:#e76f51;
-    font-size:18px;
+#addProductButton {
+    background-color: #e76f51;
+    font-size: 18px;
 }
-img{
-  max-width: 100%;
+img {
+    max-width: 100%;
 }

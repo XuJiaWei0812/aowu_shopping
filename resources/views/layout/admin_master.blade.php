@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('css/admin.css')}}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -13,7 +14,7 @@
     <title>@yield('title')</title>
 </head>
 
-<body style="background-color:#90be6d;">
+<body style="background-color:#2a9d8f;">
     <header class="navbar navbar-expand-lg navbar-dark" id="headers">
         <a class="navbar-brand" href="/admin">後臺管理系統</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

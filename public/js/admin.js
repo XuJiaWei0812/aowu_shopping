@@ -1,6 +1,7 @@
 $(document).ready(function () {
-    //addProductModel 上傳照片
-    $("#upload").change(function () {
+    //addProductModel上傳照片
+    $("#photo").change(function () {
+        $('#productsImage').html("");
         readURL(this);
     });
     function readURL(input) {
@@ -20,5 +21,49 @@ $(document).ready(function () {
             }
         }
     }
-    //addProductModel 上傳照片
+    //addProductModel上傳照片
+
+    //addProductModel新增商品表單
+    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+    $("html").click(function () {
+        $("#validatorMsg").find("ul").html('');
+        $("#validatorMsg").css('display', 'none');
+    });
+    $("#addProductForm").submit(function (event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        // console.log(formData.getAll('upload'));
+        addProduct(formData)
+    });
+    function addProduct(formData) {
+        $.ajax({
+            type: "POST",
+            url: "/admin/product/",
+            dataType: "json",
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                if ($.isEmptyObject(data.error)) {
+                    validatorMsg(data, "ok")
+                } else {
+                    validatorMsg(data, "no")
+                }
+            }
+        });
+    }
+    function validatorMsg(msg, type) {
+        $("#validatorMsg").find("ul").html('');
+        $("#validatorMsg").css('display', 'block');
+        if (type == "ok") {
+            $("#validatorMsg").attr('class','alert alert-success');
+            $("#validatorMsg").html(msg.success);
+            window.setTimeout(window.location.href = "/admin", 5000);
+        } else {
+            $("#validatorMsg").attr('class','alert alert-danger');
+            $("#validatorMsg").html(msg.error);
+        }
+    }
+    //addProductModel新增商品表單
 });
