@@ -20,9 +20,8 @@
                     <div class="form-group clearfix" id="productsImage">
                     </div>
                     <div class="form-group">
-                        <label for="name">商品名稱</label>
-                        <input required oninvalid="setCustomValidity('請輸入');" onchange="setCustomValidity('');"
-                            type="text" class="form-control" id="title" name="title" aria-describedby="titleHelp"
+                        <label for="title">商品名稱</label>
+                        <input required type="text" class="form-control" id="title" name="title" aria-describedby="titleHelp"
                             placeholder="輸入商品名稱">
                     </div>
                     <div class="form-group">

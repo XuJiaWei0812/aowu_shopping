@@ -1,5 +1,27 @@
 $(document).ready(function () {
-    //addProductModel上傳照片
+    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+    //清除驗證訊息
+    $("html").click(function () {
+        $("#validatorMsg").find("ul").html('');
+        $("#validatorMsg").css('display', 'none');
+    });
+    //清除驗證訊息
+    //確認驗證訊息(通過或失敗)
+    function validatorMsg(msg, type) {
+        $("#validatorMsg").find("ul").html('');
+        $("#validatorMsg").css('display', 'block');
+        if (type == "ok") {
+            $("#validatorMsg").attr('class', 'alert alert-success');
+            $("#validatorMsg").html(msg.success);
+            window.setTimeout(window.location.href = "/admin", 5000);
+        } else {
+            $("#validatorMsg").attr('class', 'alert alert-danger');
+            $("#validatorMsg").html(msg.error);
+        }
+    }
+    //確認驗證訊息(通過或失敗)
+
+    //admin上傳照片
     $("#photo").change(function () {
         $('#productsImage').html("");
         readURL(this);
@@ -21,14 +43,9 @@ $(document).ready(function () {
             }
         }
     }
-    //addProductModel上傳照片
+    //admin上傳照片
 
     //addProductModel新增商品表單
-    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
-    $("html").click(function () {
-        $("#validatorMsg").find("ul").html('');
-        $("#validatorMsg").css('display', 'none');
-    });
     $("#addProductForm").submit(function (event) {
         event.preventDefault();
         var formData = new FormData(this);
@@ -53,17 +70,29 @@ $(document).ready(function () {
             }
         });
     }
-    function validatorMsg(msg, type) {
-        $("#validatorMsg").find("ul").html('');
-        $("#validatorMsg").css('display', 'block');
-        if (type == "ok") {
-            $("#validatorMsg").attr('class','alert alert-success');
-            $("#validatorMsg").html(msg.success);
-            window.setTimeout(window.location.href = "/admin", 5000);
-        } else {
-            $("#validatorMsg").attr('class','alert alert-danger');
-            $("#validatorMsg").html(msg.error);
-        }
-    }
     //addProductModel新增商品表單
+    $("#editProductForm").submit(function (event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        // console.log(formData.getAll('upload'));
+        editProduct(formData, this.name)
+    });
+    function editProduct(formData,id) {
+        $.ajax({
+            type: "POST",
+            url: "/admin/product/"+id,
+            dataType: "json",
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                if ($.isEmptyObject(data.error)) {
+                    validatorMsg(data, "ok")
+                } else {
+                    validatorMsg(data, "no")
+                }
+            }
+        });
+    }
 });

@@ -10,13 +10,13 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <title>@yield('title')</title>
 </head>
 
 <body style="background-color:#2a9d8f;">
     <header class="navbar navbar-expand-lg navbar-dark" id="headers">
-        <a class="navbar-brand" href="/admin">後臺管理系統</a>
+        <a class="navbar-brand" href="/admin">@yield('title')</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">商品管理</a>
+                    <a class="nav-link" href="/admin/">商品管理</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/farmer">訂單管理</a>

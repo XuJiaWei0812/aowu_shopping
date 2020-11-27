@@ -18,3 +18,9 @@ body {
 img {
     max-width: 100%;
 }
+table#productTable td {
+    vertical-align: middle;
+}
+table#productTable{
+    font-size: 18px;
+}
