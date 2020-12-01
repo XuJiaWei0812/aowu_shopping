@@ -103,7 +103,19 @@ class ProductController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+         $validator = Validator::make($request->all(), [
             'photo.*' => 'mimes:jpg,jpeg,png,bmp|max:20000',
             'title' => ['required','string', 'min:1','max:64'],
             'sort' => ['required', 'min:1','max:5'],
@@ -136,21 +148,12 @@ class ProductController extends Controller
             unset($input['_method']);
             $product = Product::where('id', $id)
                     ->update($input);
-            return response()->json(['success' => '新增商品編輯成功'], 200);
+            return response()->json(['success' => '商品資訊編輯成功'], 200);
         }
-        // return dd($request->all());
-    }
+        // $input=$request->all();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        // return dd($input);
+
     }
 
     /**

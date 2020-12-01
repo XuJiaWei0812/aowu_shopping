@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    swal.setDefaults({
+        confirmButtonText: "確定",
+        cancelButtonText: "取消"
+    });
     $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
     //清除驗證訊息
     $("html").click(function () {
@@ -7,17 +11,21 @@ $(document).ready(function () {
     });
     //清除驗證訊息
     //確認驗證訊息(通過或失敗)
-    function validatorMsg(msg, type) {
-        $("#validatorMsg").find("ul").html('');
-        $("#validatorMsg").css('display', 'block');
-        if (type == "ok") {
-            $("#validatorMsg").attr('class', 'alert alert-success');
-            $("#validatorMsg").html(msg.success);
-            window.setTimeout(window.location.href = "/admin", 5000);
-        } else {
-            $("#validatorMsg").attr('class', 'alert alert-danger');
-            $("#validatorMsg").html(msg.error);
-        }
+    function reminder(title, html, formFunction, cancel) {
+        swal({
+            title: title,
+            html: html,
+            type: "question",
+            showCancelButton: true//顯示取消按鈕
+        }).then(
+            function (result) {
+                if (result.value) {
+                    formFunction;
+                } else if (result.dismiss === "cancel") {
+                    //使用者按下「取消」要做的事
+                    swal("取消", cancel, "error");
+                }//end else
+            });//end then
     }
     //確認驗證訊息(通過或失敗)
 
@@ -49,9 +57,23 @@ $(document).ready(function () {
     $("#addProductForm").submit(function (event) {
         event.preventDefault();
         var formData = new FormData(this);
-        // console.log(formData.getAll('upload'));
-        addProduct(formData)
+        //confirm dialog範例
+        swal({
+            title: "確定新增此商品？",
+            html: "確定後將會新增商品!",
+            type: "question",
+            showCancelButton: true//顯示取消按鈕
+        }).then(
+            function (result) {
+                if (result.value) {
+                    addProduct(formData);
+                } else if (result.dismiss === "cancel") {
+                    //使用者按下「取消」要做的事
+                    swal("取消", "取消新增此商品", "error");
+                }//end else
+            });//end then
     });
+
     function addProduct(formData) {
         $.ajax({
             type: "POST",
@@ -63,9 +85,9 @@ $(document).ready(function () {
             processData: false,
             success: function (data) {
                 if ($.isEmptyObject(data.error)) {
-                    validatorMsg(data, "ok")
+                    swal("成功!", data.sucess, "success");
                 } else {
-                    validatorMsg(data, "no")
+                    swal("錯誤!", data.error, "error");
                 }
             }
         });
@@ -74,13 +96,26 @@ $(document).ready(function () {
     $("#editProductForm").submit(function (event) {
         event.preventDefault();
         var formData = new FormData(this);
-        // console.log(formData.getAll('upload'));
-        editProduct(formData, this.name)
+        var id = this.name;
+        swal({
+            title: "確定編輯此商品資訊？",
+            html: "確定後商品資訊將會更新",
+            type: "question",
+            showCancelButton: true//顯示取消按鈕
+        }).then(
+            function (result) {
+                if (result.value) {
+                    editProduct(formData, id);
+                } else if (result.dismiss === "cancel") {
+                    //使用者按下「取消」要做的事
+                    swal("取消", "取消編輯此商品資訊", "error");
+                }//end else
+            });//end then
     });
-    function editProduct(formData,id) {
+    function editProduct(formData, id) {
         $.ajax({
             type: "POST",
-            url: "/admin/product/"+id,
+            url: "/admin/product/" + id,
             dataType: "json",
             data: formData,
             contentType: false,
@@ -88,9 +123,9 @@ $(document).ready(function () {
             processData: false,
             success: function (data) {
                 if ($.isEmptyObject(data.error)) {
-                    validatorMsg(data, "ok")
+                    swal("成功!", data.success, "success");
                 } else {
-                    validatorMsg(data, "no")
+                    swal("錯誤!", data.error, "error");
                 }
             }
         });
