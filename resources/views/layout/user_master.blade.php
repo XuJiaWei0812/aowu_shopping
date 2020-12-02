@@ -27,10 +27,10 @@
                     <a class="nav-link" href="/">首頁</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/farmer">小農產品</a>
+                    <a class="nav-link" href="/sort/farmer">小農產品</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/bread">手工麵包</a>
+                    <a class="nav-link" href="/sort/bread">手工麵包</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">

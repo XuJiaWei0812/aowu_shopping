@@ -13,21 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('user/index');
+Route::group(['prefix' => '/'], function () {
+    Route::get('', 'UserProductController@index');//使用者頁面
+    Route::get('/sort/{sort}', 'UserProductController@index');
+    Route::get('/product/{id}', 'UserProductController@thisProduct');//使用者頁面
 });
-Route::get('/farmer', function () {
-    return view('user/farmer');
+
+Route::group(['prefix' => 'cart'], function () {//購物車群組
+    Route::get('/', 'CartController@index');//購物車頁面
+    Route::get('/addToCart/{id}', 'CartController@getAddToCart');//加入購物車
+    Route::get('/increaseOneProduct/{id}', 'CartController@increaseByOne');//新增商品數量
+    Route::get('/decreaseOneProduct/{id}', 'CartController@decreaseByOne');//減少商品數量
+    Route::get('/removeProduct/{id}', 'CartController@removeProduct');//移除商品
+    Route::get('/clearCart', 'CartController@clearCart');//清出購物車
+    Route::get('/checkout', 'PageController@checkoutPage');
+    Route::post('/checkout', 'CartController@checkoutProcess');
 });
-Route::get('/bread', function () {
-    return view('user/bread');
-});
-Route::get('/product', function () {
-    return view('user/product');
-});
+
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', 'ProductController@index');
-    Route::get('/product/{id}', 'ProductController@show');
-    Route::post('/product', 'ProductController@store');
-    Route::put('/product/{id}', 'ProductController@edit');
+    Route::get('/', 'AdminProductController@index');
+    Route::get('/product/{id}', 'AdminProductController@show');
+    Route::post('/product', 'AdminProductController@store');
+    Route::put('/product/{id}', 'AdminProductController@update');
 });

@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-
 use Validator;
 use Image;
 
-class ProductController extends Controller
+class AdminProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -101,7 +100,18 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id)
+    public function edit($id)
+    {
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'photo.*' => 'mimes:jpg,jpeg,png,bmp|max:20000',
@@ -136,21 +146,9 @@ class ProductController extends Controller
             unset($input['_method']);
             $product = Product::where('id', $id)
                     ->update($input);
-            return response()->json(['success' => '新增商品編輯成功'], 200);
+            return response()->json(['success' => '商品資訊編輯成功'], 200);
         }
         // return dd($request->all());
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
