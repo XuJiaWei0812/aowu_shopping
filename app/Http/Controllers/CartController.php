@@ -13,12 +13,12 @@ class CartController extends Controller
     {
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
-        // return view('cart.cart', [
-        //     'products'=> $cart->products,
-        //     'totalPrice'=> $cart->totalPrice,
-        //     'totalQty'=>$cart->totalQty,
-        //     'title'=>'購物車',]);
-        return dd($cart);
+        return view('user.cart', [
+            'products'=> $cart->products,
+            'totalPrice'=> $cart->totalPrice,
+            'totalQty'=>$cart->totalQty,
+            'title'=>'購物車',]);
+        // return dd($cart);
     }
     public function getAddToCart(Request $request, $id)
     {
@@ -33,5 +33,48 @@ class CartController extends Controller
         //將$cart放入Session中的cart
         Session::put('cart', $cart);
         return redirect()->action('CartController@index');
+    }
+    public function increaseByOne(Request $request, $id)
+    {
+        $cart = new Cart(Session::get('cart'));
+        $cart->increaseByOne($id);
+        session()->put('cart', $cart);
+        return redirect()->action('CartController@index');
+    }
+
+    public function decreaseByOne(Request $request, $id)
+    {
+        $cart = new Cart(Session::get('cart'));
+        $cart->decreaseByOne($id);
+        session()->put('cart', $cart);
+        if ($cart->totalQty===0) {
+            session()->forget('cart');
+            return redirect()->action('CartController@index');
+        } else {
+            return redirect()->action('CartController@index');
+        }
+    }
+
+    public function clearCart()
+    {
+        if (session()->has('cart')) {
+            session()->forget('cart');
+        }
+        return redirect()->action('CartController@index');
+    }
+
+    public function checkoutview()
+    {
+        $oldCart = session()->has('cart') ? session()->get('cart') : null;
+        $cart = new Cart($oldCart);
+        if ($oldCart) {
+            return view('user.checkout', [
+            'products'=> $cart->products,
+            'totalPrice'=> $cart->totalPrice,
+            'totalQty'=>$cart->totalQty,
+            'title'=>'購物車結帳']);
+        } else {
+            return response('404 Not Found', 404);
+        }
     }
 }

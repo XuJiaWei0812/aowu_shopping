@@ -26,7 +26,7 @@ Route::group(['prefix' => 'cart'], function () {//購物車群組
     Route::get('/decreaseOneProduct/{id}', 'CartController@decreaseByOne');//減少商品數量
     Route::get('/removeProduct/{id}', 'CartController@removeProduct');//移除商品
     Route::get('/clearCart', 'CartController@clearCart');//清出購物車
-    Route::get('/checkout', 'PageController@checkoutPage');
+    Route::get('/checkout', 'CartController@checkoutview');//購物車結帳畫面
     Route::post('/checkout', 'CartController@checkoutProcess');
 });
 

@@ -1,15 +1,9 @@
 $(document).ready(function () {
+    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
     swal.setDefaults({
         confirmButtonText: "確定",
         cancelButtonText: "取消"
     });
-    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
-    //清除驗證訊息
-    $("html").click(function () {
-        $("#validatorMsg").find("ul").html('');
-        $("#validatorMsg").css('display', 'none');
-    });
-    //清除驗證訊息
     //admin上傳照片
     $("#photo").change(function () {
         $('#productsImage').html("");
@@ -33,7 +27,6 @@ $(document).ready(function () {
         }
     }
     //admin上傳照片
-
     //addProductModel新增商品表單
     $("#addProductForm").submit(function (event) {
         event.preventDefault();
