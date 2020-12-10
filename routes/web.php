@@ -17,6 +17,10 @@ Route::group(['prefix' => '/'], function () {
     Route::get('', 'UserProductController@index');//使用者頁面
     Route::get('/sort/{sort}', 'UserProductController@index');
     Route::get('/product/{id}', 'UserProductController@thisProduct');//使用者頁面
+    Route::get('login', 'authController@loginView');//登入頁面
+    Route::post('login', 'authController@login');//登入資料送出
+    Route::get('register', 'authController@registerView');//註冊頁面
+    Route::post('register', 'authController@register');//註冊資料送出
 });
 
 Route::group(['prefix' => 'cart'], function () {//購物車群組
@@ -27,6 +31,8 @@ Route::group(['prefix' => 'cart'], function () {//購物車群組
     Route::get('/removeProduct/{id}', 'CartController@removeProduct');//移除商品
     Route::get('/clearCart', 'CartController@clearCart');//清出購物車
     Route::get('/checkout', 'CartController@checkoutview');//購物車結帳畫面
+    Route::get('/linePayRequest', 'CartController@linePayRequest');
+    Route::get('/linePayConfirm', 'CartController@linePayConfirm');
     Route::post('/checkout', 'CartController@checkoutProcess');
 });
 

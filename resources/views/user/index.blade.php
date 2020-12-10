@@ -1,7 +1,6 @@
 @extends('./layout/user_master')
-@section('title',"阿梧的生活賣場")
+@section('title',"登入")
 @section('content')
-<example-component></example-component>
 <section class="container-fluid">
     <div class="row mx-auto">
         @foreach ($products as $product)

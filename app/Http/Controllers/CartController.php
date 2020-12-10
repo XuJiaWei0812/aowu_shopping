@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
+use GuzzleHttp\Client;
 use Session;
 
 class CartController extends Controller
@@ -76,5 +77,36 @@ class CartController extends Controller
         } else {
             return response('404 Not Found', 404);
         }
+    }
+
+    public function checkout(Request $request){
+
+    }
+    public function linePayRequest()
+    {
+        $client = new Client();
+        $result = $client->post('https://sandbox-api-pay.line.me/v2/payments/request', [
+            'headers' => [
+                'Content-Type'=> 'application/json; charset=UTF-8',
+                'X-LINE-ChannelId'=> 1655338422,
+                'X-LINE-ChannelSecret'=> 'c08aebe4829794bf77cbf2a033954484'
+             ],
+            'json' => [
+                    "productName"     => "測試商品",
+                    "productImageUrl" => "image/5fce5005730c4.jpg",
+                    "amount"          => "150",
+                    "currency"        => "TWD",
+                    "confirmUrl"      => "/cart/confirm",
+                    "orderId"         => "test123456789"
+            ]
+        ]);
+        $response =  $result->getBody()->getContents();
+         $response=json_decode($response, true);
+
+        return dd($response['info']['paymentUrl']['web']);
+    }
+    public function linePayConfirm()
+    {
+        return "ok";
     }
 }

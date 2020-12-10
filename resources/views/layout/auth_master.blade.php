@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="ch">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{asset('css/user.css')}}">
+    <link rel="stylesheet" href="{{asset('css/auth.css')}}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
     <title>@yield('title')</title>
 </head>
 
@@ -24,28 +24,16 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/">首頁</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/sort/farmer">小農產品</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/sort/bread">手工麵包</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item" id="shopping-cart">
-                    <i class="fa fa-shopping-cart fa-2x mx-1 my-1" style="color:#2a9d8f;"></i>
-                    @if (session()->has('cart'))
-                    <span class="btn__badge">{{session()->get('cart')->totalQty}}</span>
-                    @endif
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">登入</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">登入</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">註冊</a>
+                    <a class="nav-link" href="/register">註冊</a>
                 </li>
             </ul>
         </div>
@@ -62,7 +50,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
     </script>
-    <script src="{{asset('js/user.js')}}"></script>
+    <script src="{{asset('js/auth.js')}}"></script>
 </body>
 
 </html>
