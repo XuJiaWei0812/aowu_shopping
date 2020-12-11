@@ -1,5 +1,5 @@
 @extends('./layout/user_master')
-@section('title',"登入")
+@section('title',"首頁")
 @section('content')
 <section class="container-fluid">
     <div class="row mx-auto">

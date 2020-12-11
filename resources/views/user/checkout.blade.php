@@ -6,8 +6,7 @@
 <section class="container-fluid" id="show">
     <div class="row mx-auto">
         <div class="col-lg-7 mx-auto py-3">
-            <table class="table table-borderless table-hover mx-auto rounded"
-                style="background-color: #f4a261">
+            <table class="table table-borderless table-hover mx-auto rounded" style="background-color: #f4a261">
                 <thead class="text-center text-nowrap">
                     <tr>
                         <th scope="col">名稱</th>
@@ -42,14 +41,32 @@
                 <h5 class="font-weight-bold text-center">訂購人資料</h1>
                     {{csrf_field()}}
                     <div class="form-group">
-                        <label for="exampleInputName1">姓名</label>
-                        <input required type="text" name="name" class="form-control" id="exampleInputName1"
+                        <label for="exampleInputName1">收貨姓名</label>
+                        <input required type="text" name="name" class="form-control" id="name"
                             placeholder="輸入姓名">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputAddress1">地址</label>
-                        <input required type="text" name="address" class="form-control" id="exampleInputAddress1"
+                        <label for="exampleInputAddress1">送件地址</label>
+                        <input required type="text" name="address" class="form-control" id="phone"
                             placeholder="輸入地址">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">手機號碼</label>
+                        <input required type="text" name="phone" class="form-control" id="phone" placeholder="輸入姓名">
+                    </div>
+                    <div class="form-group">
+                        <label for="type">付款方式:</label>
+                        <select class="form-control" name="payment" id="payment">
+                            <option value="0" selected>
+                                貨到付款
+                            </option>
+                            <option value="1" selected>
+                                Line Pay
+                            </option>
+                            <option value="2" selected>
+                                綠界付款
+                            </option>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">送出訂單</button>
             </form>

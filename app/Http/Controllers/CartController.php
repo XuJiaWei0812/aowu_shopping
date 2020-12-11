@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\Order;
 use GuzzleHttp\Client;
+use Validator;
 use Session;
 
 class CartController extends Controller
@@ -63,7 +65,7 @@ class CartController extends Controller
         }
         return redirect()->action('CartController@index');
     }
-
+    //結帳顯示跟控制器-start
     public function checkoutview()
     {
         $oldCart = session()->has('cart') ? session()->get('cart') : null;
@@ -78,11 +80,47 @@ class CartController extends Controller
             return response('404 Not Found', 404);
         }
     }
+    ////結帳過程(判斷結帳方式之後新增訂單)
+    public function checkout(Request $request)
+    {
+        $input=$request->all();
+        //驗證規則
+        $rules = [
+            'name' => ['required', 'min:3', 'max:18'],
+            'phone' => ['required'],
+            'address' => ['required'],
+        ];
+        //驗證資料
+        $validatedData = Validator::make($input, $rules);
 
-    public function checkout(Request $request){
-
+        if ($validatedData->fails()) {
+            //傳送失敗JSON回應
+            return response()->json(['error' => $validatedData->errors()->all()]);
+        } else {
+            if ($input['payment']==0) {
+                return dd('貨到付款');
+            } elseif ($input['payment']==1) {
+                return dd('linepay');
+            } elseif ($input['payment']==2) {
+                return dd('綠界付款');
+            }
+        }
     }
-    public function linePayRequest()
+    ////增加訂單order
+    public function addOrder($request)
+    {
+        $cart = session()->get('cart');
+        $order_uuid = str_replace("-", "", substr(Str::uuid()->toString(), 0, 18));
+        Order::create([
+            'name' => $input["name"],
+            'email' => $input["email"],
+            'cart' => serialize($cart),
+            'address'=>$input["address"],
+            'uuid' =>  $order_uuid,
+            ]);
+    }
+    ////LINEPAY付款
+    public function linePay()
     {
         $client = new Client();
         $result = $client->post('https://sandbox-api-pay.line.me/v2/payments/request', [
@@ -101,12 +139,14 @@ class CartController extends Controller
             ]
         ]);
         $response =  $result->getBody()->getContents();
-         $response=json_decode($response, true);
+        $response=json_decode($response, true);
 
         return dd($response['info']['paymentUrl']['web']);
     }
-    public function linePayConfirm()
+    ////付款結束
+    public function checkoutEnd()
     {
         return "ok";
     }
+    //結帳顯示跟控制器-end
 }

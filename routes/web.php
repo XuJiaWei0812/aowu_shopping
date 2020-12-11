@@ -31,9 +31,8 @@ Route::group(['prefix' => 'cart'], function () {//購物車群組
     Route::get('/removeProduct/{id}', 'CartController@removeProduct');//移除商品
     Route::get('/clearCart', 'CartController@clearCart');//清出購物車
     Route::get('/checkout', 'CartController@checkoutview');//購物車結帳畫面
-    Route::get('/linePayRequest', 'CartController@linePayRequest');
-    Route::get('/linePayConfirm', 'CartController@linePayConfirm');
-    Route::post('/checkout', 'CartController@checkoutProcess');
+    Route::post('/checkout', 'CartController@checkout');
+    Route::get('/success', 'CartController@checkoutEnd');
 });
 
 Route::group(['prefix' => 'admin'], function () {
