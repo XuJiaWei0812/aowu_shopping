@@ -13,6 +13,6 @@ class Order extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'uid', 'cart', 'address', 'uuid','paid'
+        'uid','name', 'cart', 'address', 'uuid','paid'
     ];
 }

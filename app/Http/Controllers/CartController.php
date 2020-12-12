@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
 use GuzzleHttp\Client;
+use Illuminate\Support\Str;
 use Validator;
 use Session;
 
@@ -98,26 +99,36 @@ class CartController extends Controller
             return response()->json(['error' => $validatedData->errors()->all()]);
         } else {
             if ($input['payment']==0) {
-                return dd('貨到付款');
+                $this-> addOrder($input);
+                return redirect('/');
             } elseif ($input['payment']==1) {
-                return dd('linepay');
+                return view('user.linePay', [
+                    'url'=>$this->linePay(),
+                    'title'=>'購物車結帳']);
             } elseif ($input['payment']==2) {
                 return dd('綠界付款');
             }
+            // return dd($input);
         }
     }
-    ////增加訂單order
-    public function addOrder($request)
+    ////增加訂單order 減庫存 提醒付款成功
+    public function addOrder($input)
     {
         $cart = session()->get('cart');
         $order_uuid = str_replace("-", "", substr(Str::uuid()->toString(), 0, 18));
         Order::create([
+            'uid' => '1',
             'name' => $input["name"],
-            'email' => $input["email"],
             'cart' => serialize($cart),
             'address'=>$input["address"],
             'uuid' =>  $order_uuid,
             ]);
+        foreach ($cart->products as $key=>$val) {
+            Product::where('id', $key)
+                ->decrement('inventory', $val['qty']);
+        }
+        session()->forget('cart');
+        session()->flash('success', '訂單付款成功!');
     }
     ////LINEPAY付款
     public function linePay()
@@ -141,7 +152,7 @@ class CartController extends Controller
         $response =  $result->getBody()->getContents();
         $response=json_decode($response, true);
 
-        return dd($response['info']['paymentUrl']['web']);
+        return $response['info']['paymentUrl']['web'];
     }
     ////付款結束
     public function checkoutEnd()

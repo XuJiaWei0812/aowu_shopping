@@ -1,6 +1,16 @@
 @extends('./layout/user_master')
 @section('title',"首頁")
 @section('content')
+
+@if ($flash = session('success'))
+<div class="alert alert-success alert-dismissible fade show m-4" role="alert">
+    {{$flash}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+
 <section class="container-fluid">
     <div class="row mx-auto">
         @foreach ($products as $product)
