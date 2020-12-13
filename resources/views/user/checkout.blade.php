@@ -60,10 +60,10 @@
                             <option value="0" selected>
                                 貨到付款
                             </option>
-                            <option value="1" selected>
+                            <option value="1">
                                 Line Pay
                             </option>
-                            <option value="2" selected>
+                            <option value="2">
                                 綠界付款
                             </option>
                         </select>

@@ -8,7 +8,7 @@ body {
     flex-direction: column;
     overflow: inherit;
     font-size: 18px;
-    font-weight:bolder ;
+    font-weight: bolder;
 }
 #headers {
     background-color: #264653;
@@ -26,6 +26,14 @@ body {
 #shopping-cart {
     cursor: pointer;
 }
-table{
-     font-size: 18px;
+table {
+    font-size: 18px;
+}
+a,
+a:link,
+a:visited {
+    text-decoration: none;
+}
+.list-group-item{
+    background-color:transparent;
 }

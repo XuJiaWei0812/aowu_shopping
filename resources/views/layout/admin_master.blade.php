@@ -25,14 +25,11 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/admin/">商品管理</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/farmer">訂單管理</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/bread">會員管理</a>
+                    <a class="nav-link" href="/admin/order">訂單管理</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">

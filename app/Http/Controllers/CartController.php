@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
+use \ECPay_PaymentMethod as ECPayMethod;
 use Validator;
 use Session;
 
@@ -98,15 +99,15 @@ class CartController extends Controller
             //傳送失敗JSON回應
             return response()->json(['error' => $validatedData->errors()->all()]);
         } else {
-            if ($input['payment']==0) {
+            if ($input['payment']==0) {//paid=0
                 $this-> addOrder($input);
                 return redirect('/');
-            } elseif ($input['payment']==1) {
+            } elseif ($input['payment']==1) {//paid=1
                 return view('user.linePay', [
                     'url'=>$this->linePay(),
                     'title'=>'購物車結帳']);
-            } elseif ($input['payment']==2) {
-                return dd('綠界付款');
+            } elseif ($input['payment']==2) {//paid=2
+               $this-> ECPay($input);
             }
             // return dd($input);
         }
@@ -121,6 +122,7 @@ class CartController extends Controller
             'name' => $input["name"],
             'cart' => serialize($cart),
             'address'=>$input["address"],
+            'phone'=>$input["phone"],
             'uuid' =>  $order_uuid,
             ]);
         foreach ($cart->products as $key=>$val) {
@@ -153,6 +155,37 @@ class CartController extends Controller
         $response=json_decode($response, true);
 
         return $response['info']['paymentUrl']['web'];
+    }
+    public function ECPay($input)
+    {
+        try {
+            $cart = session()->get('cart');
+            $order_uuid = str_replace("-", "", substr(Str::uuid()->toString(), 0, 18));
+            $obj = new \ECPay_AllInOne();
+            //服務參數
+            $obj->ServiceURL  = "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5";   //服務位置
+            $obj->HashKey     = '5294y06JbISpM5x9' ;                                           //測試用Hashkey，請自行帶入ECPay提供的HashKey
+            $obj->HashIV      = 'v77hoKGq4kWxNNIS' ;                                           //測試用HashIV，請自行帶入ECPay提供的HashIV
+            $obj->MerchantID  = '2000132';                                                     //測試用MerchantID，請自行帶入ECPay提供的MerchantID
+            $obj->EncryptType = '1';                                                           //CheckMacValue加密類型，請固定填入1，使用SHA256加密
+            //基本參數(請依系統規劃自行調整)
+            $MerchantTradeNo = $order_uuid ;
+            $obj->Send['ReturnURL']         = "https://c4383376e4fc.ngrok.io/callback" ;    //付款完成通知回傳的網址
+            $obj->Send['PeriodReturnURL']         = "https://c4383376e4fc.ngrok.io/callback" ;    //付款完成通知回傳的網址
+            $obj->Send['ClientBackURL'] = " https://c4383376e4fc.ngrok.io/success" ;    //付款完成通知回傳的網址
+            $obj->Send['MerchantTradeNo']   = $order_uuid;                          //訂單編號
+            $obj->Send['MerchantTradeDate'] = date('Y/m/d H:i:s');                       //交易時間
+            $obj->Send['TotalAmount']       = $cart->totalPrice;                                      //交易金額
+            $obj->Send['TradeDesc']         = "good to drink" ;                          //交易描述
+            $obj->Send['ChoosePayment']     = ECPayMethod::Credit ;              //付款方式:Credit
+            $obj->Send['IgnorePayment']     = ECPayMethod::GooglePay ;           //不使用付款方式:GooglePay
+            //訂單的商品資料
+            array_push($obj->Send['Items'], array('Name' => $input['name'], 'Price' => $cart->totalPrice,
+            'Currency' => "元", 'Quantity' => (int) "1", 'URL' => "dedwed"));
+            $obj->CheckOut();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
     ////付款結束
     public function checkoutEnd()
