@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
     <title>@yield('title')</title>
 </head>
 
@@ -41,12 +42,18 @@
                     <span class="btn__badge">{{session()->get('cart')->totalQty}}</span>
                     @endif
                 </li>
+                @if (Auth::guard('web')->check())
                 <li class="nav-item">
-                    <a class="nav-link" href="#">登入</a>
+                    <a href="#" class="nav-link text-light" id="logout">登出</a>
+                </li>
+                @else
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">登入</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">註冊</a>
+                    <a class="nav-link" href="/register">註冊</a>
                 </li>
+                @endif
             </ul>
         </div>
     </header>

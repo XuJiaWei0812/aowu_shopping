@@ -34,7 +34,7 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">登出</a>
+                    <a href="#" class="nav-link text-light" id="logout">登出</a>
                 </li>
             </ul>
         </div>

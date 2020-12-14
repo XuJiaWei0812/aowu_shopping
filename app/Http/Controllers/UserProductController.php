@@ -8,6 +8,10 @@ use App\Models\Order;
 
 class UserProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('AuthorityUser');
+    }
     public function index($sort=null)
     {
         if ($sort=="farmer") {

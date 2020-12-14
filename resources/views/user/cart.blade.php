@@ -4,8 +4,7 @@
 <section class="container-fluid" id="show">
     <div class="row mx-auto">
         <div class="col-lg-7 mx-auto py-3">
-            <table class="table table-borderless table-hover mx-auto"
-                style="background-color: #f4a261">
+            <table class="table table-borderless table-hover mx-auto" style="background-color: #f4a261">
                 <thead class="text-center text-nowrap">
                     <tr>
                         <th scope="col">名稱</th>
@@ -18,19 +17,20 @@
                     @foreach ($products as $product)
                     <tr>
                         <th scope="row">
-                            <img class="img-fluid rounded float-left mr-3" width="86px" height="86px" src="{{asset(json_decode($product['product']['photo'])->url1)}}">
+                            <img class="img-fluid rounded float-left mr-3" width="86px" height="86px"
+                                src="{{asset(json_decode($product['product']['photo'])->url1)}}">
                             <span>{{$product['product']['title']}}</span>
                         </th>
                         <td class="text-center pt-3"><span>{{$product['product']['price']}}</span></td>
                         <td class="text-center d-flex justify-content-center">
-                            <a href="/cart/increaseOneProduct/{{$product['product']['id']}}"
-                                class="btn btn-link btn-sm mr-1">
-                                <i class="fas fa-plus fa-1x" style="color: #161a1d"></i>
-                            </a>
-                            <span class="py-1">{{$product['qty']}}</span>
                             <a href="/cart/decreaseOneProduct/{{$product['product']['id']}}"
                                 class="btn btn-link btn-sm ml-1">
                                 <i class="fas fa-minus fa-1x" style="color: #161a1d"></i>
+                            </a>
+                            <span class="py-1">{{$product['qty']}}</span>
+                            <a href="/cart/increaseOneProduct/{{$product['product']['id']}}"
+                                class="btn btn-link btn-sm mr-1">
+                                <i class="fas fa-plus fa-1x" style="color: #161a1d"></i>
                             </a>
                         </td>
                     </tr>
@@ -44,7 +44,6 @@
                     <tr>
                         <td colspan="3">
                             <a href="/cart/checkout" class="px-3 py-3 btn btn-success float-right">前往結帳</a>
-                            <a href="/cart/clearCart" class="mr-3 px-3 py-3 btn btn-danger float-right">清除購物車</a>
                         </td>
                     </tr>
                     @else

@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\User;
 use Validator;
-use Session;
 
 class authController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('login', ['only'=>['loginView','registerView']]);
+    }
     //登入控制器-start
     public function loginView()
     {
@@ -25,10 +29,9 @@ class authController extends Controller
             $token=bcrypt(Str::random(15));
             User::where('email', Auth::user()->email)
                     ->update(['remember_token' => $token]);
-            $user = Auth::user();
-            return dd($user->remember_token);
+            return true;
         } else {
-            return dd('no');
+            return false;
         }
     }
     //登入控制器-end
@@ -63,4 +66,13 @@ class authController extends Controller
         }
     }
     //註冊控制器-end
+    //登出控制器-start
+    public function logout()
+    {
+        if (Auth::check()) {
+            Auth::guard('web')->logout();
+            return response()->json(['success' => true], 200);
+        }
+    }
+    //控制器-end
 }

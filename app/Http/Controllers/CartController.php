@@ -14,6 +14,10 @@ use Session;
 
 class CartController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('TokenCheck', ['only'=>['checkout']]);
+    }
     public function index()
     {
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
@@ -59,14 +63,6 @@ class CartController extends Controller
             return redirect()->action('CartController@index');
         }
     }
-
-    public function clearCart()
-    {
-        if (session()->has('cart')) {
-            session()->forget('cart');
-        }
-        return redirect()->action('CartController@index');
-    }
     //結帳顯示跟控制器-start
     public function checkoutview()
     {
@@ -107,7 +103,7 @@ class CartController extends Controller
                     'url'=>$this->linePay(),
                     'title'=>'購物車結帳']);
             } elseif ($input['payment']==2) {//paid=2
-               $this-> ECPay($input);
+                $this-> ECPay($input);
             }
             // return dd($input);
         }

@@ -12,14 +12,19 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('test', function () {
+    dd(Auth::guard('web')->user());
+});
 
 Route::group(['prefix' => '/'], function () {
     Route::get('', 'UserProductController@index');//使用者全部商品頁面
     Route::get('/sort/{sort}', 'UserProductController@index');//商品分類頁面
     Route::get('/product/{id}', 'UserProductController@thisProduct');//商品詳細資訊頁面
     Route::get('order', 'UserProductController@orderView');//商品詳細資訊頁面
+    Route::get('order', 'UserProductController@orderView');
     Route::get('login', 'authController@loginView');//登入頁面
     Route::post('login', 'authController@login');//登入資料送出
+    Route::get('logout', 'authController@logout');
     Route::get('register', 'authController@registerView');//註冊頁面
     Route::post('register', 'authController@register');//註冊資料送出
 });
@@ -30,7 +35,6 @@ Route::group(['prefix' => 'cart'], function () {//購物車群組
     Route::get('/increaseOneProduct/{id}', 'CartController@increaseByOne');//新增商品數量
     Route::get('/decreaseOneProduct/{id}', 'CartController@decreaseByOne');//減少商品數量
     Route::get('/removeProduct/{id}', 'CartController@removeProduct');//移除商品
-    Route::get('/clearCart', 'CartController@clearCart');//清出購物車
     Route::get('/checkout', 'CartController@checkoutview');//購物車結帳畫面
     Route::post('/checkout', 'CartController@checkout');
     Route::get('/success', 'CartController@checkoutEnd');

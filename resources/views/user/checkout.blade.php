@@ -3,6 +3,16 @@
 @section('title',$title)
 
 @section('content')
+
+@if ($flash = session('tokenNull'))
+<div class="alert alert-danger alert-dismissible fade show m-4" role="alert">
+    {{$flash}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+
 <section class="container-fluid" id="show">
     <div class="row mx-auto">
         <div class="col-lg-7 mx-auto py-3">
@@ -42,13 +52,11 @@
                     {{csrf_field()}}
                     <div class="form-group">
                         <label for="exampleInputName1">收貨姓名</label>
-                        <input required type="text" name="name" class="form-control" id="name"
-                            placeholder="輸入姓名">
+                        <input required type="text" name="name" class="form-control" id="name" placeholder="輸入姓名">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputAddress1">送件地址</label>
-                        <input required type="text" name="address" class="form-control" id="phone"
-                            placeholder="輸入地址">
+                        <input required type="text" name="address" class="form-control" id="phone" placeholder="輸入地址">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputName1">手機號碼</label>

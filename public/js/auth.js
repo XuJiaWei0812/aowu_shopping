@@ -38,7 +38,7 @@ $(document).ready(function () {
                         .then(
                             function (result) {
                                 if (result.value) {
-                                    window.setTimeout(window.location.href = "/login", 100000);
+                                    window.setTimeout(window.location.href = "/", 100000);
                                 }
                             });//end then
                 } else {
@@ -59,17 +59,29 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "/login",
-            dataType: "json",
+            dataType: "text",
             data: formData,
             contentType: false,
             cache: false,
             processData: false,
             success: function (data) {
-                // if ($.isEmptyObject(data.error)) {
-                //     alert(data.success.message);
-                // } else {
-                //     printErrorMsg(data.error);
-                // }
+                if (data == true) {
+                    swal({
+                        title: "登入成功",
+                        type: "success",
+                        confirmButtonText: "確定"/*改這裡*/
+                    }).then(
+                        function () {
+                                window.setTimeout(window.location.href = "/", 100000);
+                        });//end then;
+                } else {
+                    swal({
+                        title: "登入失敗",
+                        html: "帳號密碼錯誤!",
+                        type: "error",
+                        confirmButtonText: "確定"/*改這裡*/
+                    });
+                }
             }
         });
     }

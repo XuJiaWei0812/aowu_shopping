@@ -14,6 +14,11 @@ class AdminProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('AuthorityAdmin', ['only'=>['index','show']]);
+    }
+
     public function index()
     {
         $product_paginate = Product::orderBy('created_at', 'asc')->Paginate(5);
