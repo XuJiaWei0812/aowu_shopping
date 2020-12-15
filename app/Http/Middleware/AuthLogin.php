@@ -19,8 +19,13 @@ class AuthLogin
     public function handle(Request $request, Closure $next)
     {
         if (Auth::guard('web')->check()) {
-            return \redirect('/');
+            if (Auth::guard('web')->user()->authority==0) {
+                return redirect()->action('UserProductController@index');
+            } elseif (Auth::guard('web')->user()->authority==1) {
+                return redirect()->action('AdminProductController@index');
+            }
         }
+
         return $next($request);
     }
 }

@@ -14,15 +14,19 @@ class UserProductController extends Controller
     }
     public function index($sort=null)
     {
+        $title="";
         if ($sort=="farmer") {
             $product_paginate = Product::where('sort', 0)->orderBy('created_at', 'asc')->Paginate(5);
+            $title="小農產品";
         } elseif ($sort=="bread") {
             $product_paginate = Product::where('sort', 1)->orderBy('created_at', 'asc')->Paginate(5);
+            $title="手工麵包";
         } else {
             $product_paginate = Product::orderBy('created_at', 'asc')->Paginate(5);
+            $title="首頁";
         }
         $binding = [
-            'title' => '首頁',
+            'title' => $title,
             'products' => $product_paginate,
         ];
         return view('user.index', $binding);

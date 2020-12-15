@@ -11,19 +11,19 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: "/logout",
-            dataType: "json",
+            dataType: "text",
             contentType: false,
             cache: false,
             processData: false,
             success: function (data) {
-                if ($.isEmptyObject(data.error)) {
+                if (data == true) {
                     swal({
                         title: "登出成功",
                         type: "success",
                         confirmButtonText: "確定"/*改這裡*/
                     }).then(
                         function () {
-                            window.setTimeout(window.location.href = "/", 100000);
+                            window.setTimeout(window.location.href = "/login", 100000);
                         });//end then;
                 }
             }

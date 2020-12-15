@@ -18,10 +18,10 @@ class AuthorityAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('web')->check()) {
-            if (Auth::guard('web')->user()->authority==0) {
-                return \redirect('/');
-            }
+        if (!Auth::guard('web')->check()) {
+            return \redirect('/login/');
+        } elseif (Auth::guard('web')->check() && Auth::guard('web')->user()->authority==0) {
+            return \redirect('/');
         }
 
         return $next($request);

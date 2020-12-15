@@ -16,7 +16,7 @@ class CartController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('TokenCheck', ['only'=>['checkout']]);
+        $this->middleware('TokenCheck', ['only'=>['checkout']]);
     }
     public function index()
     {
@@ -30,6 +30,20 @@ class CartController extends Controller
         // return dd($cart);
     }
     public function getAddToCart(Request $request, $id)
+    {
+        //取得符合$id的商品
+        $product = Product::find($id);
+        //確認Session當中是否有cart
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        //使用Cart並將$oldCart帶入
+        $cart = new Cart($oldCart);
+        //使用Cart的add 方法 將 商品 以及 商品編號 帶入
+        $cart->add($product, $product->id);
+        //將$cart放入Session中的cart
+        Session::put('cart', $cart);
+        return redirect('/product/'.$id);
+    }
+    public function goToCart(Request $request, $id)
     {
         //取得符合$id的商品
         $product = Product::find($id);
@@ -131,6 +145,8 @@ class CartController extends Controller
     ////LINEPAY付款
     public function linePay()
     {
+        $cart = session()->get('cart');
+        $order_uuid = str_replace("-", "", substr(Str::uuid()->toString(), 0, 18));
         $client = new Client();
         $result = $client->post('https://sandbox-api-pay.line.me/v2/payments/request', [
             'headers' => [
@@ -139,17 +155,16 @@ class CartController extends Controller
                 'X-LINE-ChannelSecret'=> 'c08aebe4829794bf77cbf2a033954484'
              ],
             'json' => [
-                    "productName"     => "測試商品",
+                    "productName"     => "Aowu-Life賣場",
                     "productImageUrl" => "image/5fce5005730c4.jpg",
-                    "amount"          => "150",
+                    "amount"          => $cart->totalPrice,
                     "currency"        => "TWD",
                     "confirmUrl"      => "/cart/confirm",
-                    "orderId"         => "test123456789"
+                    "orderId"         => $order_uuid
             ]
         ]);
         $response =  $result->getBody()->getContents();
         $response=json_decode($response, true);
-
         return $response['info']['paymentUrl']['web'];
     }
     public function ECPay($input)
@@ -176,7 +191,7 @@ class CartController extends Controller
             $obj->Send['ChoosePayment']     = ECPayMethod::Credit ;              //付款方式:Credit
             $obj->Send['IgnorePayment']     = ECPayMethod::GooglePay ;           //不使用付款方式:GooglePay
             //訂單的商品資料
-            array_push($obj->Send['Items'], array('Name' => $input['name'], 'Price' => $cart->totalPrice,
+            array_push($obj->Send['Items'], array('Name' => 'Aowu-Life賣場', 'Price' => $cart->totalPrice,
             'Currency' => "元", 'Quantity' => (int) "1", 'URL' => "dedwed"));
             $obj->CheckOut();
         } catch (Exception $e) {

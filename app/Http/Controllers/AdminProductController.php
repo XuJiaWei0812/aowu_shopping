@@ -17,6 +17,7 @@ class AdminProductController extends Controller
     public function __construct()
     {
         $this->middleware('AuthorityAdmin', ['only'=>['index','show']]);
+        $this->middleware('TokenCheck', ['only'=>['store','update']]);
     }
 
     public function index()
@@ -27,16 +28,6 @@ class AdminProductController extends Controller
             'products' => $product_paginate,
         ];
         return view('admin.index', $binding);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -100,16 +91,6 @@ class AdminProductController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -156,14 +137,4 @@ class AdminProductController extends Controller
         // return dd($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

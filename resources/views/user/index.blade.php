@@ -1,5 +1,5 @@
 @extends('./layout/user_master')
-@section('title',"首頁")
+@section('title',$title)
 @section('content')
 
 @if ($flash = session('success'))

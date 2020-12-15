@@ -56,12 +56,22 @@
                             {{$order->transport}}
                         </td>
                         <td class="text-center">
-                            <a class="btn btn-link" href="">
-                                <i class="fas fa-edit fa-2x" style="color: #d90429;"></i>
+                            <a class="btn btn-link" id="{{$order->id}}" name="transport" data-item="1" href="#">
+                                <i class="fas fa-truck fa-2x" title="已出貨" style="color: #bc4749;"></i>
+                            </a>
+                            <a class="btn btn-link" id="{{$order->id}}" name="transport" data-item="2" href="#">
+                                <i class="fas fa-box fa-2x" title="已到達" style="color: #6a994e;"></i>
                             </a>
                         </td>
                     </tr>
                     @endforeach
+                    @if (empty($order))
+                    <tr class="h5 text-center">
+                        <td colspan="5">
+                            沒有訂單業績慘淡!
+                        </td>
+                    </tr>
+                    @endif
                 </tbody>
             </table>
         </div>

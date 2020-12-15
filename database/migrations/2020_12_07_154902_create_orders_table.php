@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('address');
             $table->string('uuid');
             $table->boolean('paid')->default(0);
+            $table->bigInteger('transport')->default(0);
             $table->timestamps();
         });
     }

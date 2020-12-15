@@ -1,5 +1,9 @@
 $(document).ready(function () {
-    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+    });
     swal.setDefaults({
         confirmButtonText: "確定",
         cancelButtonText: "取消"
@@ -125,19 +129,57 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: "/logout",
-            dataType: "json",
+            dataType: "text",
             contentType: false,
             cache: false,
             processData: false,
             success: function (data) {
-                if ($.isEmptyObject(data.error)) {
+                if (data == true) {
                     swal({
                         title: "登出成功",
                         type: "success",
                         confirmButtonText: "確定"/*改這裡*/
                     }).then(
                         function () {
-                            window.setTimeout(window.location.href = "/", 100000);
+                            window.setTimeout(window.location.href = "/login", 100000);
+                        });//end then;
+                }
+            }
+        });
+    }
+    $("a[name='transport']").click(function (event) {
+        var transport = $(this).data('item');
+        var id = this.id;
+        swal({
+            title: "確定更改運送狀態?",
+            type: "question",
+            showCancelButton: true//顯示取消按鈕
+        }).then(
+            function (result) {
+                if (result.value) {
+                    orderUpdate(transport, id);
+                } else if (result.dismiss === "cancel") {
+                }//end else
+            });//end then
+    });
+    function orderUpdate(transport, orderId) {
+        $.ajax({
+            data: {
+                'transport': transport,
+                'orderId': orderId
+            },
+            type: 'get',
+            dataType: 'text',
+            url: "/admin/order/update",
+            success: function (data) {
+                if (data == true) {
+                    swal({
+                        title: "運送狀態更改成功",
+                        type: "success",
+                        confirmButtonText: "確定"/*改這裡*/
+                    }).then(
+                        function () {
+                            window.setTimeout(window.location.href = "/admin/order", 100000);
                         });//end then;
                 }
             }

@@ -45,7 +45,7 @@
             </div>
             <div class="d-flex p-2 w-100">
                 <a href="/cart/addToCart/{{$product->id}}" class="font-weight-bold btn btn-danger mr-2 btn-lg btn-block float-left">加入購物車</a>
-                <a href="#" class="font-weight-bold btn btn-warning m-0 btn-lg btn-block float-right">直接結帳</a>
+                <a href="/cart/goToCart/{{$product->id}}" class="font-weight-bold btn btn-warning m-0 btn-lg btn-block float-right">直接結帳</a>
             </div>
         </div>
     </div>

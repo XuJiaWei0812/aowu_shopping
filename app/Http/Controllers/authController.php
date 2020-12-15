@@ -13,7 +13,7 @@ class authController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('login', ['only'=>['loginView','registerView']]);
+        $this->middleware('AuthLogin', ['only'=>['loginView','registerView']]);
     }
     //登入控制器-start
     public function loginView()
@@ -25,6 +25,8 @@ class authController extends Controller
     }
     public function login(Request $request)
     {
+        Auth::logout();
+
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $token=bcrypt(Str::random(15));
             User::where('email', Auth::user()->email)
@@ -70,8 +72,8 @@ class authController extends Controller
     public function logout()
     {
         if (Auth::check()) {
-            Auth::guard('web')->logout();
-            return response()->json(['success' => true], 200);
+            Auth::logout();
+            return true;
         }
     }
     //控制器-end
