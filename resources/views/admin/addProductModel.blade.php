@@ -27,10 +27,10 @@
                     <div class="form-group">
                         <label for="type">狀態:</label>
                         <select class="form-control" name="sort" id="sort">
-                            <option value="1" selected>
+                            <option value="0" selected>
                                 小農產品
                             </option>
-                            <option value="2">
+                            <option value="1">
                                 手工麵包
                             </option>
                         </select>

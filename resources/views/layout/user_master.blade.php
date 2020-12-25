@@ -44,6 +44,9 @@
                 </li>
                 @if (Auth::guard('web')->check())
                 <li class="nav-item">
+                    <a href="/order" class="nav-link text-light">我的訂單</a>
+                </li>
+                <li class="nav-item">
                     <a href="#" class="nav-link text-light" id="logout">登出</a>
                 </li>
                 @else

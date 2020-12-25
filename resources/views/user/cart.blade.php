@@ -23,15 +23,15 @@
                         </th>
                         <td class="text-center pt-3"><span>{{$product['product']['price']}}</span></td>
                         <td class="text-center d-flex justify-content-center">
-                            <a href="/cart/decreaseOneProduct/{{$product['product']['id']}}"
-                                class="btn btn-link btn-sm ml-1">
+                            <button class="btn btn-link btn-sm ml-1" name="calculation"
+                            data-action="decreaseOneProduct" data-key="{{$product['product']['id']}}">
                                 <i class="fas fa-minus fa-1x" style="color: #161a1d"></i>
-                            </a>
+                            </button>
                             <span class="py-1">{{$product['qty']}}</span>
-                            <a href="/cart/increaseOneProduct/{{$product['product']['id']}}"
-                                class="btn btn-link btn-sm mr-1">
+                            <button class="btn btn-link btn-sm mr-1" name="calculation"
+                            data-action="increaseOneProduct" data-key="{{$product['product']['id']}}">
                                 <i class="fas fa-plus fa-1x" style="color: #161a1d"></i>
-                            </a>
+                            </button>
                         </td>
                     </tr>
                     @endforeach

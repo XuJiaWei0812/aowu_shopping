@@ -48,7 +48,7 @@
                                     <p>收件人 : {{$order->name}}</p>
                                     <p>地址 : {{$order->address}}</p>
                                     <p>電話 : {{$order->phone}}</p>
-                                    <p>付款方式 : {{$order->paid}}</p>
+                                    <p>付款 : {{$order->paid}}</p>
                                 </div>
                             </div>
                         </td>

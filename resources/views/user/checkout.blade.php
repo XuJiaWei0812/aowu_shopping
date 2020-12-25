@@ -47,20 +47,20 @@
     </div>
     <div class="row mx-auto">
         <div class="col-lg-7 mx-auto py-3">
-            <form method="POST" class="mx-auto bg-white rounded p-3 font-weight-bold" method="/cart/checkout">
+            <form method="POST" class="mx-auto bg-white rounded p-3 font-weight-bold" id="checkout">
                 <h5 class="font-weight-bold text-center">訂購人資料</h1>
-                    {{csrf_field()}}
+                    @csrf
                     <div class="form-group">
-                        <label for="exampleInputName1">收貨姓名</label>
-                        <input required type="text" name="name" class="form-control" id="name" placeholder="輸入姓名">
+                        <label for="exampleInputName1">收貨人姓名</label>
+                        <input required type="text" name="name" class="form-control" id="name" placeholder="輸入收貨人姓名">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputAddress1">送件地址</label>
-                        <input required type="text" name="address" class="form-control" id="phone" placeholder="輸入地址">
+                        <input required type="text" name="address" class="form-control" id="address" placeholder="輸入送件地址">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputName1">手機號碼</label>
-                        <input required type="text" name="phone" class="form-control" id="phone" placeholder="輸入姓名">
+                        <input required type="text" name="phone" class="form-control" id="phone" pattern="\d{10}" placeholder="輸入手機號碼">
                     </div>
                     <div class="form-group">
                         <label for="type">付款方式:</label>

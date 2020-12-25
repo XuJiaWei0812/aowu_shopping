@@ -19,7 +19,7 @@
             <a href="{{asset('/product/'.$product->id)}}" style="color:#000000;text-decoration: none;transform:scale(1,1);">
                 <div class="card h-100">
                     <div class="card-body">
-                        <img src="{{asset(json_decode($product->photo)->url1)}}" class="img-fluid d-block rounded"
+                        <img src="{{asset(json_decode($product->photo)->url1)}}" class="img-fluid d-block rounded mx-atuo w-100"
                             alt="麵包">
                         <div class="card-title text-left font-weight-bold pt-3" style="font-size: 18px">
                             {{$product->title}}
